@@ -11,6 +11,15 @@ class Game:
         self.clock = pygame.time.Clock()
         self.running = True
 
+        self.terrain_spritesheet = Spritesheet('img/spritesheet.png')
+    def createTileMap(self):
+        for i, row in enumerate(tilemap):
+            for j, column in enumerate(row):
+                Ground(self, j, i)
+                if column == "B":
+                    Block(self, j, i)
+                if column == "P":
+                    Player(self, j, i)
     def new(self):
         # Start game
         self.playing = True
@@ -20,7 +29,8 @@ class Game:
         self.enemies = pygame.sprite.LayeredUpdates()
         self.attacks = pygame.sprite.LayeredUpdates()
 
-        self.player = Player(self, 1, 2)
+        self.createTileMap()
+
 
     def events(self):
         for event in pygame.event.get():
