@@ -11,21 +11,28 @@ class Game:
         self.clock = pygame.time.Clock()
         self.running = True
 
-        self.terrain_spritesheet = Spritesheet('img/spritesheet.png')
+        self.terrain_spritesheet = Spritesheet('img/spritesheet400.png')
+
     def createTileMap(self):
-        for i, row in enumerate(tilemap):
-            for j, column in enumerate(row):
-                Ground(self, j, i)
-                if column == "B":
-                    Block(self, j, i)
-                if column == "P":
-                    Player(self, j, i)
+        if LEVEL == 1:
+            for i, row in enumerate(tilemap):
+                for j, column in enumerate(row):
+                    Ground(self, j, i)
+                    if column == "B":
+                        Block(self, j, i)
+                    if column == "P":
+                        Player(self, j, i)
+                    if column == "H":
+                        Portal(self, j, i)
+
+
     def new(self):
         # Start game
         self.playing = True
 
         self.all_sprites = pygame.sprite.LayeredUpdates()
         self.blocks = pygame.sprite.LayeredUpdates()
+        self.portal = pygame.sprite.LayeredUpdates()
         self.enemies = pygame.sprite.LayeredUpdates()
         self.attacks = pygame.sprite.LayeredUpdates()
 
@@ -40,6 +47,7 @@ class Game:
 
     def update(self):
         self.all_sprites.update()
+
 
     def draw(self):
         self.screen.fill(BLACK)
